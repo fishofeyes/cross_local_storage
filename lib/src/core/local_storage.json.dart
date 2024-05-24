@@ -23,7 +23,7 @@ class LocalStorageStore implements LocalStorageInterface {
   ///
   /// It is NOT guaranteed that this cache and the device prefs will remain
   /// in sync since the setter method might fail for any reason.
-  final Map<String, Object>? _preferenceCache;
+  final Map<String, dynamic>? _preferenceCache;
 
   static const String _prefFileName = 'preferences.json';
 
@@ -96,22 +96,19 @@ class LocalStorageStore implements LocalStorageInterface {
   ///
   /// If [value] is null, this is equivalent to calling [remove()] on the [key].
   @override
-  Future<bool> setDouble(String key, double value) =>
-      _setValue('Double', key, value);
+  Future<bool> setDouble(String key, double value) => _setValue('Double', key, value);
 
   /// Saves a string [value] to persistent storage in the background.
   ///
   /// If [value] is null, this is equivalent to calling [remove()] on the [key].
   @override
-  Future<bool> setString(String key, String value) =>
-      _setValue('String', key, value);
+  Future<bool> setString(String key, String value) => _setValue('String', key, value);
 
   /// Saves a list of strings [value] to persistent storage in the background.
   ///
   /// If [value] is null, this is equivalent to calling [remove()] on the [key].
   @override
-  Future<bool> setStringList(String key, List<String> value) =>
-      _setValue('StringList', key, value);
+  Future<bool> setStringList(String key, List<String> value) => _setValue('StringList', key, value);
 
   /// Removes an entry from persistent storage.
   @override
@@ -140,8 +137,7 @@ class LocalStorageStore implements LocalStorageInterface {
   /// (without using the plugin) while the app is running.
   @override
   Future<void> reload() async {
-    final preferences =
-        await (_getSharedPreferencesMap() as FutureOr<Map<String, Object>>);
+    final preferences = await (_getSharedPreferencesMap() as FutureOr<Map<String, Object>>);
     _preferenceCache!.clear();
     _preferenceCache!.addAll(preferences);
   }
@@ -168,7 +164,7 @@ class LocalStorageStore implements LocalStorageInterface {
     return true;
   }
 
-  static Future<Map<String, Object>?> _getSharedPreferencesMap() async {
+  static Future<Map<String, dynamic>?> _getSharedPreferencesMap() async {
     final file = File(_prefFileName);
     if (await file.exists()) {
       final jsonString = await file.readAsString();
